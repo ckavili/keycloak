@@ -22,6 +22,10 @@ realm:
             firstName: Hans
             lastName: Gunther
             email: hgunther@bier.de
+          - username: liz
+            firstName: Lizzie
+            lastName: Mayer
+            email: lmayer@hobbiton.org
 
 operatorhub:
   operators:
