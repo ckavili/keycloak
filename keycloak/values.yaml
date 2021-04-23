@@ -8,7 +8,7 @@ realm:
     displayName: "Openshift Realm"
     client:
       - name: console
-        redirectUris: "https://oauth-openshift.apps.biscuits.weld.p1.openshiftapps.com/oauth2callback/xxx/*"
+        redirectUris: "https://someopenshiftapi/oauth2callback/xxx/*"
         users:
           - username: jdoe
             firstName: John
