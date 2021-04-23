@@ -1,0 +1,43 @@
+{{- if .Values.realm }}
+{{- range $realm := .Values.realm }}
+{{- range .client }}
+{{- range .users }}
+---
+apiVersion: keycloak.org/v1alpha1
+kind: KeycloakUser
+metadata:
+  name: {{ .username }}
+  labels:
+    app: {{ include "keycloak.fullname" $ }}
+    {{- include "keycloak.labels" $ | nindent 4 }}
+spec:
+  user:
+    username: {{ .username }}
+    firstName: {{ .firstName }}
+    lastName: {{ .lastName }} 
+    email: {{ .email }} 
+    enabled: true
+    emailVerified: false
+    realmRoles:
+      - admins
+      - viewer
+    clientRoles:
+      account:
+        - manage-account
+        - view-profile
+      realm-management:
+        - manage-users
+        - view-users
+        - query-users
+        - create-client
+    credentials:
+      - temporary: true
+        type: password
+        value: Passw0rd
+  realmSelector:
+    matchLabels:
+      realm: {{ $realm.name }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

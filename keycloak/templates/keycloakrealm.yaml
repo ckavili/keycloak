@@ -1,0 +1,26 @@
+{{- if .Values.realm }}
+{{- range $realm := .Values.realm }}
+---
+apiVersion: keycloak.org/v1alpha1
+kind: KeycloakRealm
+metadata:
+  name: {{ $realm.name }}
+  labels:
+    realm: {{ $realm.name }}
+    {{- include "keycloak.labels" $ | nindent 4 }}
+spec:
+  instanceSelector:
+    matchLabels:
+      app: {{ include "keycloak.fullname" $ }}
+  realm:
+    enabled: true
+    rememberMe: true
+    sslRequired: external
+    registrationEmailAsUsername: false
+    displayName: {{ $realm.displayName }}
+    realm: {{ $realm.name }}
+    registrationAllowed: false
+    id: {{ $realm.name }}
+    loginWithEmailAllowed: false
+{{- end }}
+{{- end }}

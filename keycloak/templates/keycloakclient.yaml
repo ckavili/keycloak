@@ -1,0 +1,45 @@
+{{- if .Values.realm }}
+{{- range $realm := .Values.realm }}
+{{- range .client }}
+---
+apiVersion: keycloak.org/v1alpha1
+kind: KeycloakClient
+metadata:
+  name: {{ .name }}
+  labels:
+    app: {{ include "keycloak.fullname" $ }}
+    {{- include "keycloak.labels" $ | nindent 4 }}
+spec:
+  realmSelector:
+    matchLabels:
+      realm: {{ $realm.name }}
+  client:
+    name: {{ .name }}
+    clientId: {{ .name }}
+    bearerOnly: false
+    protocol: openid-connect
+    publicClient: true
+    {{- if .redirectUris }}
+    redirectUris:
+      - {{ .redirectUris | quote }}
+    {{- end }}
+    webOrigins:
+      - "*"
+    standardFlowEnabled: true
+    serviceAccountsEnabled: true
+    directAccessGrantsEnabled: true
+    surrogateAuthRequired: false
+    enabled: true
+    alwaysDisplayInConsole: false,
+    clientAuthenticatorType: "client-secret"
+    consentRequired: false
+    implicitFlowEnabled: false
+    frontchannelLogout: false
+    fullScopeAllowed: true
+    nodeReRegistrationTimeout: -1
+    defaultRoles:
+      - "admin"
+      - "viewer"
+{{- end }}
+{{- end }}
+{{- end }}

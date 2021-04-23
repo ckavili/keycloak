@@ -1,0 +1,10 @@
+apiVersion: v2
+name: keycloak
+description: A Helm chart for Keycloak
+type: application
+version: 0.0.1
+appVersion: "1.16.0"
+dependencies:
+  - name: operatorhub
+    version: "0.0.7"
+    repository: https://redhat-cop.github.io/helm-charts

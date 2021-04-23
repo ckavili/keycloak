@@ -1,0 +1,40 @@
+# Default values for keycloak.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+realm:
+  - name: openshift
+    displayName: "Openshift Realm"
+    client:
+      - name: console
+        redirectUris: "https://oauth-openshift.apps.biscuits.weld.p1.openshiftapps.com/oauth2callback/xxx/*"
+        users:
+          - username: jdoe
+            firstName: John
+            lastName: Doe
+            email: jdoe@redhat.com
+          - username: mkutlu
+            firstName: Mehmet
+            lastName: Kutlu
+            email: mkutlu@example.com
+          - username: hgunther
+            firstName: Hans
+            lastName: Gunther
+            email: hgunther@bier.de
+
+operatorhub:
+  operators:
+    - name: keycloak-operator
+      namespace: sso-keycloak
+      subscription:
+        channel: alpha
+        approval: Automatic
+        operatorName: keycloak-operator
+        sourceName: community-operators
+        sourceNamespace: openshift-marketplace
+        csv: keycloak-operator.v12.0.1 #check with ArgoCD
+      operatorgroup:
+        create: true
+
+
